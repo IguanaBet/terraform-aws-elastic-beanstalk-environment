@@ -154,17 +154,15 @@ resource "aws_iam_role_policy_attachment" "ecr_readonly" {
   policy_arn = "arn:${local.partition}:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
 }
 
-resource "aws_ssm_activation" "ec2" {
-  count = local.enabled ? 1 : 0
+// FIXME: Re-Enable SSM Activation creating (Omited because of ValidationException on first apply)
+# resource "aws_ssm_activation" "ec2" {
+#   count = local.enabled ? 1 : 0
 
-  name               = module.this.id
-  iam_role           = join("", aws_iam_role.ec2.*.id)
-  registration_limit = var.autoscale_max
-  tags               = module.this.tags
-  depends_on = [
-    aws_iam_role_policy_attachment.ssm_ec2
-  ]
-}
+#   name               = module.this.id
+#   iam_role           = join("", aws_iam_role.ec2.*.id)
+#   registration_limit = var.autoscale_max
+#   tags               = module.this.tags
+# }
 
 data "aws_iam_policy_document" "default" {
   count = local.enabled ? 1 : 0
