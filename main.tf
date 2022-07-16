@@ -162,7 +162,7 @@ resource "aws_ssm_activation" "ec2" {
   registration_limit = var.autoscale_max
   tags               = module.this.tags
   depends_on = [
-    aws_iam_role.ec2
+    aws_iam_role_policy_attachment.ssm_ec2
   ]
 }
 
